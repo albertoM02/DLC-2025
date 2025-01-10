@@ -1,9 +1,21 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import sys
+
+# Verificar que se pasó el argumento para la ruta del archivo
+if len(sys.argv) != 2:
+    print("Uso: python script.py <ruta_al_archivo_csv>")
+    sys.exit(1)
+
+# Obtener la ruta del archivo desde los argumentos de la terminal
+file_path = sys.argv[1]
 
 # Cargar el dataset
-file_path = 'Madera_daily_data.csv'
-data = pd.read_csv(file_path)
+try:
+    data = pd.read_csv(file_path)
+except FileNotFoundError:
+    print(f"Error: No se encontró el archivo en la ruta especificada: {file_path}")
+    sys.exit(1)
 
 # Asegurarse de que las columnas esperadas existen
 if 'Date' not in data.columns or 'Close' not in data.columns:
